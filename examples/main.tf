@@ -1,5 +1,5 @@
 provider "device42" {
-  api_endpoint = "https://device42.cudaops.com/api/1.0"
+  api_endpoint = ""
 }
 
 data "device42_devices" "first_10" {
