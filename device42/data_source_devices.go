@@ -39,5 +39,6 @@ func dataSourceDevices() *schema.Resource {
 }
 
 func dataSourceDevicesRead(d *schema.ResourceData, meta interface{}) error {
-	return nil
+	client := meta.(*Client)
+
 }

@@ -1,6 +1,7 @@
 package device42
 
 import (
+	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
 )
@@ -31,6 +32,24 @@ func Provider() terraform.ResourceProvider {
 		DataSourcesMap: map[string]*schema.Resource{
 			"device42_devices": dataSourceDevices(),
 		},
+
 		ResourcesMap: map[string]*schema.Resource{},
+
+		ConfigureFunc: providerConfigure,
 	}
+}
+
+func providerConfigure(data *schema.ResourceData) (interface{}, error) {
+	config := Config{
+		APIEndpoint: data.Get("api_endpoint").(string),
+		Username:    data.Get("username").(string),
+		Password:    data.Get("password").(string),
+	}
+
+	client, err := config.NewClient()
+	if err != nil {
+		return nil, errwrap.Wrapf("error initializing Device42 client: {{err}}", err)
+	}
+
+	return client, nil
 }
