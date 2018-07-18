@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/danryan/terraform-provider-device42/device42"
 	"github.com/hashicorp/terraform/plugin"
 	"github.com/hashicorp/terraform/terraform"
 )
@@ -8,7 +9,7 @@ import (
 func main() {
 	plugin.Serve(&plugin.ServeOpts{
 		ProviderFunc: func() terraform.ResourceProvider {
-			return Provider()
+			return device42.Provider()
 		},
 	})
 }
